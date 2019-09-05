@@ -9,7 +9,13 @@
  * (a) Implement an efficient program in Java that, given an array with the previous property,
  *     determines whether a given integer is in the array.
  * 
- * (b) What is the running time complexity of the program? O(logn).
+ * (b) What is the running time complexity of the program? O(log n)
+ * 
+ * 
+ * Main Idea:
+ * 
+ * Use a binary search alogorithm to find the index of the max element in A, 
+ * then use binary search to search in each piece. 
  * 
  */
 package incrementdecrementarray;
@@ -23,7 +29,6 @@ public class IncrementDecrementArray {
         int k = max(a, 0, n-1); /* (array, low index, max index) */
         int target = -6;
         
-        System.out.println(k);
         if(binarySearch_1(a, 0, k+1, target) == -1)
         {
             if (binarySearch_2(a, 0, k+1, target) == -1)
@@ -81,7 +86,7 @@ public class IncrementDecrementArray {
      * 
      */
     public static int binarySearch_1 (int[] a, int first, int size, int target){
-        
+
         int middle;
         
         if(size<= 0)                    
