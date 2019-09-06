@@ -24,22 +24,25 @@
  *      2) Get the total sum of the array/sequence as sum
  *      3) Iterate through the array and for each index i, do following.
  *          a) Update sum to get the right sum. 
- *             sum = sum - arr[i]  // sum is now right sum
+ *             sum = sum - arr[i]         // sum is now right sum
  *          b) If leftsum is equal to sum, then return current index.
  *          c) leftsum = leftsum + arr[i] // update leftsum for next iteration.
- *      4) return -1 // If we come out of loop without returning then there is no equilibrium index
+ *      4) return -1                      // If we come out of loop without returning then there is no equilibrium index
  *              
  */
 package balancedindex;
 
 public class BalancedIndex {
 
+   // Driver code 
     public static void main(String[] args) 
-    {
-        int[] a = {-7, 1, 5, 2, -4, 3, 0}; 
-        
-        System.out.println(balanceIndex(a, a.length));
-    }
+    { 
+        BalancedIndex equi = new BalancedIndex(); 
+        int arr[] = { -7, 1, 5, 2, -4, 3, 0 }; 
+        int arr_size = arr.length; 
+        System.out.println("First equilibrium index is " +  equi.equilibrium(arr, arr_size)); 
+                          
+    } 
     
     /**
      * Strategy: 
@@ -48,42 +51,31 @@ public class BalancedIndex {
      *      through the array sequentially until the sums of the sub-arrays are equal.
      */ 
     
-    public static int balanceIndex (int[] A, int n){
-        
-        int equilibrium = -1;
-        
-        /* Get initial left and right sums */
-        long sumLeft  = 0;
-        long sumRight = 0;
-        long tempRight; 
-              
-        for(int i = 0; i < n; i++) { 
-            /* Adds every value in the index of that array */       
-            sumRight += A[i];
+    int equilibrium(int arr[], int n) 
+    { 
+        int sum = 0;      /* initialize sum of whole array */
+        int leftsum = 0;  /* initialize leftsum */
+  
+        /* Find sum of the whole array */
+        for (int i = 0; i < n; ++i) {
+            sum += arr[i]; 
         }
-        
-        /* Traverse the array, looking for the first equilibrium. */
-        for (int i = 0; i < n; i++)
-        {
-            tempRight = sumRight - A[i];
+//        System.out.println("total Sum of the array: "+sum);
             
-            System.out.println("tempRight: " + tempRight);
+  
+        for (int i = 0; i < n; ++i) { 
+            sum -= arr[i];                  /* sum is now right sum for index i */
+            System.out.println("Sum: "+sum);
             
-            if (sumLeft == tempRight){
-                
-                System.out.println(""+ sumLeft + ""+ tempRight); 
-                
-                equilibrium = i;
-                
-                break;
-                
-            }else{
-                /* Prepare for next comparison. */
-                sumLeft += A[i];
-                
-                sumRight = tempRight;
-            }            
-        }  
-        return equilibrium;
-    }  
+            if (leftsum == sum) 
+                return i; 
+  
+            leftsum += arr[i]; 
+            
+            System.out.println("total leftSum: "+leftsum);
+        } 
+        System.out.println("total rightSum: "+sum);
+        /* If no equilibrium index found, then return 0 */
+        return -1; 
+    } 
 }

@@ -17,6 +17,15 @@
  * Use a binary search alogorithm to find the index of the max element in A, 
  * then use binary search to search in each piece. 
  * 
+ * 
+ * Algorithm:
+ *      1. We first need to Sort the array in increasing order. 
+ *      2. To make it efficient, we make the elements equal to the middle element, of the sorted array.
+ *      3. IF there's an even # of elements, we check for the cost of both middle elements, and take the minimum.
+ * 
+ *      4. IF S[x] < K, incremement the element by K - S[x]
+ *      5. IF S[x] > K, decrement the element by S[x] - K. 
+ * 
  */
 package incrementdecrementarray;
 
@@ -38,6 +47,7 @@ public class IncrementDecrementArray {
         }else
             System.out.println("TRUE");
     }
+    
     /**
      * Finds the index of the maximum in a bitonic array, RECURSIVELY
      * 
@@ -52,7 +62,7 @@ public class IncrementDecrementArray {
      */
     public static int max(int[] a, int low, int high){
        
-        int mid = low + (high - low) / 2;            //  0 + (10 - 0) / 2   
+        int mid = low + (high - low) / 2;/* Lands us in the middle index of the sorted array */  
         
         System.out.println("mid: "+mid+" low: "+low+" high: "+high);
         
