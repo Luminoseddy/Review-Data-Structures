@@ -7,8 +7,6 @@
  * 
  * (b) What is the running time complexity? --> O(log n).
  * 
- * 
- * 
  * Algorithm: 
  *      - Using a binary search, get index of the first occurrence of key in A[]. 
  *        And let it be i.
@@ -60,12 +58,12 @@ public class CountOccurences {
          * Cycle 1: mid= 4, key= 3, a[mid]= 6, a[mid-1]= 5, n= 5
          *              <- Recursively ->
          *              return(A[], 0, mid-1, key, n) ==> return(A[], 0, 3, 3, 9)
-         * Repeat.
+         * 
          */             
         if(high >= low) 
         { 
             int mid = (low + high) / 2; /* Locate to the middle index of the array. */   
-            System.out.println(A[mid]);
+            
             if (( mid == 0 || key > A[mid-1]) && A[mid] == key) 
               return mid; 
 
