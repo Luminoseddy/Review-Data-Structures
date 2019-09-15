@@ -1,7 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
+ * Determine if the BST is a BST
+ * 
+ *  To have a balanced tree, the height difference in the tree can't be more than 1,
+ * 
+ * 
+ * Algorithm: 
+ *        From the root value, are all the node values less than the root located on the left side subTree?
+ *        From the root value, are all the node values greater than the root located on the right side subTree?
+ * 
+ *        Check if all the node constraints hold true, meaning are the nodes located in the proper sides of the left / right subtrees. 
+ *        
+ * 
+ *    
  */
 package binarytreeisbst;
 
@@ -37,11 +48,14 @@ public class BinaryTreeIsBST {
     }
 
 
+    
+    /* Pass in the root, and min / max values indicating the range for the subtree. */
     public static Node<Integer> insert(Node<Integer> head, Node<Integer> node) {
-        if (head == null) {
-            return node;
-        }
-
+        
+        /* Base case. */
+        if (head == null) { return node; }
+            
+       
         if (node.getData() <= head.getData()) {
             head.setLeftChild(insert(head.getLeftChild(), node));
         } else {
@@ -52,14 +66,20 @@ public class BinaryTreeIsBST {
     }
 
     public static boolean isBinarySearchTree(Node<Integer> root, int min, int max) {
-        if (root == null) {
-            return true;
-        }
-
+        
+        /* Base case: */
+        if (root == null) { return true; }
+            
+        
+        /* Check if the data in the current root node is out of range from the given bounds. */
         if (root.getData() <= min || root.getData() > max) {
             return false;
         }
-
+   
+        /* Recursively call to keep checking if its a binary search tree.
+         * 
+         * When calling for the left child, the current node value should be the me max value possible, 
+         * we pass the same min, but the max value is the current node value, */
         return isBinarySearchTree(root.getLeftChild(), min, root.getData())
                 && isBinarySearchTree(root.getRightChild(), root.getData(), max);
     }
@@ -93,7 +113,11 @@ public class BinaryTreeIsBST {
         public void setRightChild(Node<T> rightChild) {
             this.rightChild = rightChild;
         }
-    }
+    }}
+    
+   
 
-}
+
+
+
 

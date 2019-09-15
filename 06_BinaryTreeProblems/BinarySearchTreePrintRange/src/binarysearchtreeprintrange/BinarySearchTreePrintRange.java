@@ -46,19 +46,25 @@ public class BinarySearchTreePrintRange {
         return head;
     }
 
+    
+    /* Takes in the root of the tree, and sets a min / high range of what we're in search for.  */
     public static void printRange(Node<Integer> root, int low, int high) {
-        if (root == null) {
-            return;
-        }
-
-        if (low <= root.getData()) {
-            printRange(root.getLeftChild(), low, high);
-        }
-
+        
+        /* Base case: Do nothing if the tree is empty. */
+        if (root == null) { return; }
+            
+        /* CHECK If the value passed in is greater than the minimum value, 
+         * Recursively, run this operaton on the left side of the sub tree. */
+        if (low <= root.getData()) { printRange(root.getLeftChild(), low, high); }
+            
+        /* IF the input value is greater than the minimum value AND 
+         * the input is less than the max value, THEN
+         * Print out all the values within that range. */
         if (low <= root.getData() && root.getData() <= high) {
             System.out.println(root.getData());
         }
 
+        /* IF higher then recursively run this case to the right subtree. */
         if (high > root.getData()) {
             printRange(root.getRightChild(), low, high);
         }
