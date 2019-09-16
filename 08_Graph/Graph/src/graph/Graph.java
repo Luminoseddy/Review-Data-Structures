@@ -1,21 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Interface: A class with methods that have no implementations.
+ *            You implement the Interface with the keyword “Implement” in a class.
+ *            The key with the interface is that when you implement the interface, you must    
+ *            include all functions inside the class that implements the interface.
+ * 
  */
 package graph;
 
-/**
- *
- * @author edward
- */
-public class Graph {
+import java.util.List;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+public interface Graph {
+
+    enum GraphType {
+        DIRECTED,
+        UNDIRECTED
     }
-    
+
+    GraphType TypeofGraph();
+    void addEdge(int v1, int v2);
+
+    void addEdge(int v1, int v2, int weight);
+
+    int getWeightedEdge(int v1, int v2);
+
+    List<Integer> getAdjacentVertices(int v);
+
+    int getNumVertices();
+
+    int getIndegree(int v);
 }
+
