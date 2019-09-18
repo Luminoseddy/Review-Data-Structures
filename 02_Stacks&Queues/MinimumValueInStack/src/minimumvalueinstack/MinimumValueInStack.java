@@ -62,15 +62,14 @@ public class MinimumValueInStack {
 
     public static class MinimumStack {
         
-        /* Set up2 Stacks to hold current Stack, Minimum Stack.  */
-        private static Stack<Integer> stack = new Stack<>();
-        private Stack<Integer> minimumStack = new Stack<>();
+        private static Stack<Integer> stack = new Stack<>(); /* Hold the current stack. */
+        private Stack<Integer> minimumStack = new Stack<>(); /* Hold the minimum stack. */
 
         public void push(int data) throws Exception { /* Pushes into the minStack. */
-            int min = data;
             
-            if (!minimumStack.isEmpty()) {        /* If Stack !Empty*/     
-                if (min > minimumStack.peek()) {  /* If the minValue is greater than the top of the minStack. */ 
+            int min = data;         
+            if (!minimumStack.isEmpty()) {        /* For every push() We peek inside the minStack as long as is not empty. */     
+                if (min > minimumStack.peek()) {  /* If data is greater then the top of minStack. */ 
                     min = minimumStack.peek();    /* Then, minValue is the new top of the minStack. */
                 }
             }

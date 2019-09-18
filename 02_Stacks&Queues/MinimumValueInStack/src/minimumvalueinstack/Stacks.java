@@ -81,58 +81,38 @@ public class Stacks<T> {
         return top.getData();
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    public boolean isFull() {
-        return size == MAX_SIZE;
-    }
-
-    public int getSize() {
-        return size;
-    }
-    
-    
+    public boolean isEmpty() { return size == 0; }
+        
+    public boolean isFull() { return size == MAX_SIZE; }
+        
+    public int getSize() { return size; }
+        
     /** 
-     * These are known as nested classes. (Class inside another class.)
-     * We must use the 'static' to signify its a nested class. 
-     * Without 'static' we, it's an inner class.
-     * 
-     * We can set to private and be inaccessible except by the outer class.
-     *
+     * Nested class.
+     * Use 'static' to signify its a nested class.
+     * If private it can be inaccessible except by the outer class.
      */
     public static class Element<T> {
         private T data;
         private Element next;
-
-        public T getData() {
-            return data;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }
-
-        public Element getNext() {
-            return next;
-        }
-
-        public void setNext(Element next) {
-            this.next = next;
-        }
-
+        
+        /* Constructor. */
         public Element(T data, Element next) {
             this.data = data;
             this.next = next;
         }
-    }
 
-   
-    private static class StackOverflowException extends Exception {
+        /* Helper Methods. */
+        public T getData() { return data; }
+        
+        public void setData(T data) { this.data = data; }
+            
+        public Element getNext() { return next; }
+            
+        public void setNext(Element next) { this.next = next; }
+           
     }
-
-    private static class StackUnderflowException extends Exception {
-    }
+    private static class StackOverflowException extends Exception {}
+    private static class StackUnderflowException extends Exception {}
 }
 

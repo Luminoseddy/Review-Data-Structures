@@ -1,14 +1,11 @@
-
-package queuebuiltwithtwostacks;
-import java.util.Stack;
-
 /**
  *  Time Complexity: 
  *      enqueue/dequeue : O(1)
  * 
  * Any one operation, the element can't be pushed / popped more than twice. 
  */
-
+package queuebuiltwithtwostacks;
+import java.util.Stack;
 
 public class QueueBuiltWithTwoStacks<T> {
 

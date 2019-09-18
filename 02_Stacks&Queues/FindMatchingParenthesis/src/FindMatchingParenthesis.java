@@ -30,6 +30,8 @@ public static boolean hasMatchingParenthesis(String input){
         for (int i = 0; i < input.length(); i++){
             char ch = input.charAt(i); /* Let ch be each character from input string. */
 
+            System.out.println("Stack: " + parenthesisStack);
+            
             System.out.println("Checking: " + ch);
             if(openingParenthesisSet.contains(ch)){  
                 System.out.println("Pushed open brace: " + ch);
@@ -53,7 +55,7 @@ public static boolean hasMatchingParenthesis(String input){
 }  
          
     public static void main(String args[]) {
-      System.out.println(String.format("Has matching parenthesis %s? : %s", "{}[]()({[)}]", hasMatchingParenthesis("{}[]()({[)}]")));
+      System.out.println(String.format("Has matching parenthesis %s? : %s", "", hasMatchingParenthesis("{{}}")));
     }     
 }
 
