@@ -1,7 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Time Complexity: 
+ *                  O(E*V) : IF adjacency lists are used. 
+ *                  O(V^3) : IF adjacency matrix. 
+ * 
+ * 
+ * Does not use the Greedy algorithm.
+ * Greedy algorithm works well when all edges are positive values. 
+ * With negative distances, the sum of distances are not monotonically increasing. 
+ * 
+ * Ballmanford algorithm process all the edges.
+ * 
+ * DISTANCE [NEIGHBOUR] = DISTANCE [CURRENT] + WEIGHT OF EDGE [CURRENT, NEIGHBOUR]
+ * We do this for every edge, (V-1) times for each edge. 
+ * 
+ * 
+ * Longest possible path to a vertex is V - 1
+ * 
+ * After 1 iteration, all V which 1 are edge away from the source are accurate. 
+ * After 2 iteration, all V which 2 are edge away from the source are accurate. 
+ * After 3 iteration, all V which 3 are edge away from the source are accurate. 
+ * 
+ * Handling negative cycles. 
+ * 
  */
 package graph;
 
@@ -64,22 +84,22 @@ public class BellmanFord {
             distanceTable.put(j, new DistanceInfo());
         }
 
-        // Set up the distance of the specified source.
+        /* Set up the distance of the specified source. */
         distanceTable.get(source).setDistance(0);
         distanceTable.get(source).setLastVertex(source);
 
+        /* Simple queue to explore all vertices regardless of priority. */
         LinkedList<Integer> queue = new LinkedList<>();
 
-        // Relaxing (processing) all the edges numVertices - 1 times
+        /* Relaxing (processing). iterate through all the edges numVertices - 1 times. */
         for (int numIterations = 0; numIterations < graph.getNumVertices() - 1; numIterations++) {
-            // Add every vertex to the queue so we're sure to access all the edges
-            // in the graph.
+            /* Add every vertex to the queue so we're sure that all the edges in the graph have been explored.
+             * Adding all the verticies of the graph into the queue and get the adjacent edges for all those vertices.  */  
             for (int v = 0; v < graph.getNumVertices(); v++) {
                 queue.add(v);
             }
 
-            // Keep track of the edges visited so we visit each edge just once
-            // in every iteration.
+            /* Keep track of the edges visited so we visit each edge just once in every iteration. */
             Set<String> visitedEdges = new HashSet<>();
             while (!queue.isEmpty()) {
                 int currentVertex = queue.pollFirst();
@@ -95,8 +115,8 @@ public class BellmanFord {
 
                     int distance = distanceTable.get(currentVertex).getDistance()
                             + graph.getWeightedEdge(currentVertex, neighbor);
-                    // If we find a new shortest path to the neighbour update
-                    // the distance and the last vertex.
+                    /* If we find a new shortest path to the neighbour update the distance and the last vertex. */
+                    
                     if (distanceTable.get(neighbor).getDistance() > distance) {
                         distanceTable.get(neighbor).setDistance(distance);
                         distanceTable.get(neighbor).setLastVertex(currentVertex);
@@ -105,14 +125,14 @@ public class BellmanFord {
             }
         }
 
-        // Add all the vertices to the queue one last time to check for
-        // a negative cycle.
+        /* Add all the vertices to the queue one last time to check for a negative cycle. */
+        
         for (int v = 0; v < graph.getNumVertices(); v++) {
             queue.add(v);
         }
 
-        // Relaxing (processing) all the edges one last time to check if
-        // there exists a negative cycle
+        /* Relaxing (processing) all the edges one last time to check if there exists a negative cycle */
+        
         while (!queue.isEmpty()) {
             int currentVertex = queue.pollFirst();
             for (int neighbor : graph.getAdjacentVertices(currentVertex)) {
@@ -162,14 +182,15 @@ public class BellmanFord {
      */
     public static class DistanceInfo {
 
-        private int distance;
-        private int lastVertex;
+        private int distance;  /* Distance table stores the distance to the vertext from the source. */
+        private int lastVertex;/* Holds the last vertex in the path from the current vertex. */
+
 
         public DistanceInfo() {
-            // The initial distance to all nodes is assumed infinite. Set it to
-            // a very large value rather than the maximum integer value. Bellman Ford
-            // supports negative weights and adding anything to this distance can
-            // make it a negative value which interferes with the algorithm.
+            /* The initial distance to all nodes is assumed infinite. Set it to
+             * a very large value rather than the maximum integer value. Bellman Ford
+             * supports negative weights and adding anything to this distance can
+             * make it a negative value which interferes with the algorithm. */
             distance = 100000;
             lastVertex = -1 ;
         }

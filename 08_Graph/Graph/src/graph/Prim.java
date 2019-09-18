@@ -1,7 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Time Complexity: 
+ *          O(ElogV) : IF binary heaps are used for priority queue.
+ *          O(E+V*V) : IF array is used for priority queue.
+ * 
+ * Minimum spanning tree is a subgraph that contains all the vertices.
+ * 
+ * You generate the distance table using Dijkstra algorithm using any vertex as source. 
+ * 
+ * DISTANCE [NEIGHBOUR] = WEIGHT OF EDGE [VERTEX,NEIGHBOUR]
+ * 
+ * Only worry about the weight of the edge, not the cumulative distance from the source
+ * 
+ * The edge is chosen to be part of the spanning tree IF:
+ *      - The vertex is closest vertex at the current step. (connected by lowest weight)
+ *      - The vertex is not part of the spanning tree already. 
+ * 
+ * We explore more edges than vertices in this Algorithm.
+ * 
  */
 package graph;
 
@@ -27,7 +42,20 @@ public class Prim {
         spanningTree(graph1, 0);
     }
 
+    
+    
+    
+    
     public static void spanningTree(Graph graph, int source) {
+        
+        /**
+         * Start with any source, set up the distance table and priority queue, 
+         * it that returns nodes in order from the shortest distance from the source (greedy solution). 
+         * 
+         * The distance from the source here is the distance from the last edge connected to that vertex
+         * (Which thats the difference between the Dijkstra and Prim algorithm).
+         * 
+         */
         Map<Integer, DistanceInfo> distanceTable = new HashMap<>();
         PriorityQueue<VertexInfo> queue = new PriorityQueue<>(new Comparator<VertexInfo>() {
             @Override
@@ -36,6 +64,7 @@ public class Prim {
             }
         });
 
+        /* Initialize the distance table for every vertex(node) in the graph. */
         for (int j = 0; j < graph.getNumVertices(); j++) {
             distanceTable.put(j, new DistanceInfo());
         }
@@ -45,26 +74,30 @@ public class Prim {
 
         Map<Integer, VertexInfo> vertexInfoMap = new HashMap<>();
 
+        /* Set up the vertex info for the source, and add it to the priorty queue.
+         * Also set up the mapping for the vertex info for every vertex. */
         VertexInfo sourceVertexInfo = new VertexInfo(source, 0);
         queue.add(sourceVertexInfo);
         vertexInfoMap.put(source, sourceVertexInfo);
 
+        /* Set of edges, connects all nodes of th graph, is a string presented by 0 or 1. */  
         Set<String> spanningTree = new HashSet<>();
         Set<Integer> visitedVertices = new HashSet<>();
 
         while (!queue.isEmpty()) {
+            /* We've seeded the queue into the VertexInfo. */
+            /* Poll the queue to find the highest priority vertex. (shortest distance). */
+             
             VertexInfo vertexInfo = queue.poll();
             int currentVertex = vertexInfo.getVertexId();
-
-            // Do not re-visit vertices which are already part of the
-            // tree.
-            if (visitedVertices.contains(currentVertex)) {
-                continue;
-            }
+   
+            /* Every time we see the vertex, it must be something that hasn't visited yet. 
+             * If we've seen it, continue and don't process it. */
+            if (visitedVertices.contains(currentVertex)) { continue; }
+                
             visitedVertices.add(currentVertex);
 
-            // If the current vertex is a source we do not have an edge
-            // yet.
+            /* If the current vertex is a source we do not have an edge yet. */
             if (currentVertex != source) {
                 String edge = String.valueOf(currentVertex)
                         + String.valueOf(distanceTable.get(currentVertex).getLastVertex());
@@ -76,17 +109,14 @@ public class Prim {
             for (Integer neighbour : graph.getAdjacentVertices(currentVertex)) {
                 int distance = graph.getWeightedEdge(currentVertex, neighbour);
 
-                // If we find a new shortest path to the neighbour update
-                // the distance and the last vertex.
+                /* If we find a new shortest path to the neighbor update the distance and the last vertex.*/        
                 if (distanceTable.get(neighbour).getDistance() > distance) {
+                    
                     distanceTable.get(neighbour).setDistance(distance);
                     distanceTable.get(neighbour).setLastVertex(currentVertex);
-
                     VertexInfo neighbourVertexInfo = vertexInfoMap.get(neighbour);
-                    if (neighbourVertexInfo != null) {
-                        queue.remove(neighbourVertexInfo);
-                    }
-
+                    if (neighbourVertexInfo != null) { queue.remove(neighbourVertexInfo); }
+                      
                     neighbourVertexInfo = new VertexInfo(neighbour, distance);
                     vertexInfoMap.put(neighbour,neighbourVertexInfo);
                     queue.add(neighbourVertexInfo);
@@ -104,10 +134,12 @@ public class Prim {
      * The distance specified is the distance from the source node
      * and the last vertex is the last vertex just before the current
      * one while traversing from the source node.
+     * 
+     * The data structure is the same, but the way we use it is different. 
      */
     public static class DistanceInfo {
 
-        private int distance;
+        private int distance; 
         private int lastVertex;
 
         public DistanceInfo() {
@@ -137,13 +169,13 @@ public class Prim {
 
     /**
      * A simple class which holds the vertex id and the weight of
-     * the edge that leads to that vertex from its neighbour
+     * the edge that leads to that vertex from its neighbor
      */
 
     public static class VertexInfo {
 
-        private int vertexId;
-        private int distance;
+        private int vertexId; /* Track evey vertex id. */
+        private int distance; /* And current distance from that source. */
 
         public VertexInfo(int vertexId, int distance) {
             this.vertexId = vertexId;

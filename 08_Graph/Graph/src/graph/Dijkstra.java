@@ -1,17 +1,39 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * TIME COMPLEXITY: 
+ *                  O(ElogV) : Only if the binary heaps are used for priority queues.
+ *                  O(E+V^2) : If array is used for priority queue.
+ * 
+ * Dijkstra's Algorithm: Finding the shortest path in a weighted graph. 
+ *  
+ * 3 MAJOR differences:   
+ *      1. The distance from a node now has to account for the weight of edges traversed.
+ *         Distance[neighbor] = distance[vertex] + weight of edge[vertex, neighbor]
+ *         initialize all the distance to infinite instead of -1. 
+ * 
+ *      2. Weighted graphs visit the neighbor with the lowest weight. 
+ *         Each vertex has neighbors. Use Priority Queue.
+ *         To get the next vertex in the path, pop the element with the lowest weight. (Greedy Algorithm.)
+ *         Greedy algorithms are good for optimization problems. (Dijkstra is also greedy type algorithm
+ *         Greedy solutions are useful to find approx solutions to very hard problems.
+ *         Ex. Traveling salesman problem. 
+ * 
+ *      3. Possible to visit vertex more than once. 
+ *         Check if new distance is smaller than old distance.
+ *         RELAXATION: Rewriting the distance and the path to vertex.
+ * 
  */
+
+ 
+
 package graph;
 
 import java.util.*;
 
 public class Dijkstra {
 
-
     public static void main(String[] args) {
         Graph graph1 = new AdjacencyMatrixGraph(8, Graph.GraphType.DIRECTED);
+        
         graph1.addEdge(2, 7, 4);
         graph1.addEdge(0, 3, 2);
         graph1.addEdge(0, 4, 2);
@@ -28,15 +50,23 @@ public class Dijkstra {
 
 
     public static Map<Integer, DistanceInfo> buildDistanceTable(Graph graph, int source) {
+        
         Map<Integer, DistanceInfo> distanceTable = new HashMap<>();
+        
+        /* Set up the priority queue, and using the GREEDY ALGORITHM, 
+         * it returns all the nodes in the order of the shortest distance from the source. */
         PriorityQueue<VertexInfo> queue = new PriorityQueue<>(new Comparator<VertexInfo>() {
             @Override
             public int compare(VertexInfo v1, VertexInfo v2) {
                 return ((Integer) v1.getDistance()).compareTo(v2.getDistance());
             }
         });
+        
+        
         Map<Integer, VertexInfo> vertexInfoMap = new HashMap<>();
-
+        
+        /* Initialize the distance table, the row of every vertex for the ditance table,
+         * and add a distance table entry for each node in the graph. */
         for (int j = 0; j < graph.getNumVertices(); j++) {
             distanceTable.put(j, new DistanceInfo());
         }
@@ -45,32 +75,39 @@ public class Dijkstra {
         distanceTable.get(source).setLastVertex(source);
 
         VertexInfo sourceVertexInfo = new VertexInfo(source, 0);
+        
+        /* Add the source to the priority queue and set up a mapping to the vertex info
+         * for every vertex in the queue. */
         queue.add(sourceVertexInfo);
         vertexInfoMap.put(source, sourceVertexInfo);
 
         while (!queue.isEmpty()) {
+            
+            /* First dequeue or remove the closest vertex, and at any point we want that vertex whos distance is the smallest. 
+             * We use the priority queue. */
             VertexInfo vertexInfo = queue.poll();
             int currentVertex = vertexInfo.getVertexId();
 
+            /* Once we have that vertex we iterate through all the neighbors of that queue. */ 
             for (Integer neighbour : graph.getAdjacentVertices(currentVertex)) {
-                // Get the new distance, account for the weighted edge.
+                
+                /* New distance to the new vertex  is the distance of current vertex + the weighted edge that conects the vertetex to its neighbor . */
                 int distance = distanceTable.get(currentVertex).getDistance()
                         + graph.getWeightedEdge(currentVertex, neighbour);
 
-                // If we find a new shortest path to the neighbour update
-                // the distance and the last vertex.
+                /* Once we get the distance to the neighbor, we check if the new path distance is 
+                 * shorter than the currently existing path. and update the distance table. */
                 if (distanceTable.get(neighbour).getDistance() > distance) {
                     distanceTable.get(neighbour).setDistance(distance);
                     distanceTable.get(neighbour).setLastVertex(currentVertex);
 
-                    // We've found a new short path to the neighbour so remove
-                    // the old node from the priority queue.
+                    /* */
                     VertexInfo neighbourVertexInfo = vertexInfoMap.get(neighbour);
-                    if (neighbourVertexInfo != null) {
-                        queue.remove(neighbourVertexInfo);
-                    }
-
-                    // Add the neighbour back with a new updated distance.
+                    
+                    /* REMOVE THE OUTDATED VERTEX PATH INFORMATION FROM THE QUEUE - WE HAVE A NEW SHORTER ROUTE */
+                    if (neighbourVertexInfo != null) { queue.remove(neighbourVertexInfo); }
+                        
+                    /* Add the neighbour back with a new updated distance. */
                     neighbourVertexInfo = new VertexInfo(neighbour, distance);
                     queue.add(neighbourVertexInfo);
                     vertexInfoMap.put(neighbour, neighbourVertexInfo);
@@ -80,18 +117,27 @@ public class Dijkstra {
         return distanceTable;
     }
 
+    
+    
+    
     public static void shortestPath(Graph graph, Integer source, Integer destination) {
+        
+        /* Builds th distance table of the entire graph. */
         Map<Integer, DistanceInfo> distanceTable = buildDistanceTable(graph, source);
 
+        /* Allows us to back track from the destination node. */
         Stack<Integer> stack = new Stack<>();
         stack.push(destination);
 
+        /* Backtrack by getting the last vertex of every node and adding it to the stack. */
         int previousVertex = distanceTable.get(destination).getLastVertex();
+        
         while (previousVertex != -1 && previousVertex != source) {
             stack.push(previousVertex);
             previousVertex = distanceTable.get(previousVertex).getLastVertex();
         }
 
+        /* If no valid last vertex was found in the idstance table. */
         if (previousVertex == -1) {
             System.out.println("There is no path from node: " + source
                     + " to node: " + destination);
@@ -112,14 +158,13 @@ public class Dijkstra {
      * one while traversing from the source node.
      */
     public static class DistanceInfo {
-
-        private int distance;
-        private int lastVertex;
+        
+        private int distance;  /* Distance table stores the distance to the vertext from the source. */
+        private int lastVertex;/* Holds the last vertex in the path from the current vertex. */
 
         public DistanceInfo() {
-            // The initial distance to all nodes is assumed
-            // infinite.
-            distance = Integer.MAX_VALUE;
+            
+            distance = Integer.MAX_VALUE; /* Initially setting this to inifnite. Eventually they'll be updated. */
             lastVertex = -1;
         }
 
@@ -143,12 +188,14 @@ public class Dijkstra {
 
     /**
      * A simple class which holds the vertex id and the weight of
-     * the edge that leads to that vertex from its neighbour
+     * the edge that leads to that vertex from its neighbor.
+     * 
+     * This is a Data Structure that we use. 
      */
     public static class VertexInfo {
 
-        private int vertexId;
-        private int distance;
+        private int vertexId; /* Track evey vertex id. */
+        private int distance; /* And current distance from that source. */
 
         public VertexInfo(int vertexId, int distance) {
             this.vertexId = vertexId;

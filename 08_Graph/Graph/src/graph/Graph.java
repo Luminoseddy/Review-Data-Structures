@@ -17,16 +17,16 @@ public interface Graph {
     }
 
     GraphType TypeofGraph();
-    void addEdge(int v1, int v2);
+    void addEdge(int v1, int v2); /* unweighted*/
 
-    void addEdge(int v1, int v2, int weight);
+    void addEdge(int v1, int v2, int weight); /* weighted */
 
     int getWeightedEdge(int v1, int v2);
 
-    List<Integer> getAdjacentVertices(int v);
+    List<Integer> getAdjacentVertices(int v); /* Data Structure */
 
     int getNumVertices();
-
+ 
     int getIndegree(int v);
 }
 
