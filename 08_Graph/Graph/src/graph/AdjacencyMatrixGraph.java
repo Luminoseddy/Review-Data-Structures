@@ -28,6 +28,7 @@ public class AdjacencyMatrixGraph implements Graph {
             }
         }
     }
+    
     /**
      * Takes in the source and destination of the vertices.
      * This is an implementation from Graph.

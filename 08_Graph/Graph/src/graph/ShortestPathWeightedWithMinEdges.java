@@ -35,6 +35,8 @@ public class ShortestPathWeightedWithMinEdges {
         Map<Integer, DistanceEdgeInfo> distanceTable = new HashMap<>();
         PriorityQueue<VertexInfo> queue = new PriorityQueue<>(new Comparator<VertexInfo>() {
             
+            /* Priority queue checks both the distance and number of edges for a vertex. 
+             * If the distance is th same then return the number of edges checked. */
             @Override
             public int compare(VertexInfo v1, VertexInfo v2) {
                  if (v1.getDistance().compareTo(v2.getDistance()) != 0) {
@@ -63,7 +65,7 @@ public class ShortestPathWeightedWithMinEdges {
 
             for (Integer neighbour : graph.getAdjacentVertices(currentVertexInfo.getVertexId())) {
                 
-                // Get the distance and number of edges from the current vertex to the neighbour.
+                /* Get the distance and number of edges from the current vertex to the neighbour. */
                 int distance = distanceTable.get(currentVertexInfo.getVertexId()).getDistance()
                         + graph.getWeightedEdge(currentVertexInfo.getVertexId(), neighbour);
                 int edges = distanceTable.get(currentVertexInfo.getVertexId()).getNumEdges() + 1;
@@ -72,7 +74,7 @@ public class ShortestPathWeightedWithMinEdges {
                 if (neighbourDistance > distance || ((neighbourDistance == distance)
                         && (distanceTable.get(neighbour).getNumEdges() > edges))) {
 
-                    // Update the distance table for the neighbour with the new information.
+                    /* Update the distance table for the neighbour with the new information. */
                     distanceTable.get(neighbour).setInfo(
                             currentVertexInfo.getVertexId(), distance, edges);
 
@@ -81,16 +83,13 @@ public class ShortestPathWeightedWithMinEdges {
                         queue.remove(neighbourVertexInfo);
                     }
 
-                    // Set up the updated neigbour vertex info with the new distance
-                    // and number of edges.
+                    /* Set up the updated neigbour vertex info with the new distance and number of edges. */          
                     neighbourVertexInfo = new VertexInfo(neighbour, distance, edges);
                     queue.add(neighbourVertexInfo);
                     vertexInfoMap.put(neighbour, neighbourVertexInfo);
                 }
             }
-
         }
-
         return distanceTable;
     }
 
@@ -126,9 +125,9 @@ public class ShortestPathWeightedWithMinEdges {
 
     public static class DistanceEdgeInfo {
 
-        private Integer distance;
-        private Integer numEdges;
-        private Integer lastVertex;
+        private Integer distance;   /* Distance form source. */
+        private Integer numEdges;   /* The number of edges from the source. */
+        private Integer lastVertex; /* Last vertex in thr path. */
 
         public DistanceEdgeInfo() {
             distance = Integer.MAX_VALUE;
@@ -155,6 +154,7 @@ public class ShortestPathWeightedWithMinEdges {
         }
     }
 
+    /* Holds the information of the vertex that gets added into the priority queue. */
     public static class VertexInfo {
 
         private Integer vertexId;
