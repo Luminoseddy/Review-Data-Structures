@@ -19,7 +19,8 @@ public class PrimePalindrome {
     }
     
     
-  public static int primePalindrome(int n) {
+  public static int primePalindrome(int n) 
+  {
             
     for (int i = n; i < max; i++) {
       if (isPalindrome(i) && isPrime(i)) {
@@ -57,7 +58,6 @@ public class PrimePalindrome {
       return false;
     }
       
-    
     for (int i = 3; i <= a; i+=2) {
       if (x % i == 0)
         return false;
