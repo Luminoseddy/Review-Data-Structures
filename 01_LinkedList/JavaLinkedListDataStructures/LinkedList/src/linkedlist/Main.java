@@ -42,18 +42,15 @@ public class Main {
     public static void main(String[] args) {
 
         LinkedList<Integer> n = new LinkedList<Integer>();
-
+        System.out.println("Adding nodes, CurrentList" );
         n.addNode(3);
         n.addNode(4);
         n.addNode(5);
-        n.addNode(10);
-
-        System.out.println("addNodes(T data) function:" );
+        n.addNode(10);     
         n.printNodes(); //  to print all the nodes
 
-        System.out.println("\ncountNodes() function: " + n.countNodes());
-
-        System.out.println("popElement() function: " + n.popElement());
+        System.out.println("\ncountNodes(): " + n.countNodes());
+        System.out.println("popElement(), now we have: " + n.popElement());
 //        System.out.println("Printing all nodes through printnode function after pop function" );
         n.printNodes();
 
@@ -61,19 +58,22 @@ public class Main {
         n.insertNth(0, 3);
         n.insertNth(4, 12);
         n.insertNth(4, 31);
-//        System.out.println("Printing all nodes through printnode function after insert function" );
+        n.insertNth(4, 40);
+        n.insertNth(4, 50);
+        System.out.println("\nAfter insert Nth position:" );
         n.printNodes();
 
-//        n.insertSorted(3);
-//        n.insertSorted(14);
-//        n.insertSorted(14);
-//        n.insertSorted(7);
-//        System.out.println("Printing all nodes through printnode function after insertsorted function" );
-//        n.printNodes();
+//        System.out.println("\nInsert Sorted: ");
+        n.insertSorted(3);
+        n.insertSorted(14);
+        n.insertSorted(14);
+        n.insertSorted(7);
+        System.out.println("\nAfter insertsorted function" );
+        n.printNodes();
 //
 //        // After removing duplicates
 //        n.removeDuplicates();
-//        System.out.println("Printing all nodes through printnode function after removeDuplicate function" );
+//        System.out.println("\nPrinting all nodes through printnode function after removeDuplicate function" );
 //        n.printNodes();
 //
 //

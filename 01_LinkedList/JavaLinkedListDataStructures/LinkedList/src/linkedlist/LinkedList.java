@@ -33,13 +33,7 @@ public class LinkedList<T extends Comparable<T>> implements Cloneable {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
+   
     /* Return the first element in the linked list. */  
     public T popElement() {
         /* IF there are nodes in the linkList, access the 1st E via head reference. */
@@ -139,19 +133,20 @@ public class LinkedList<T extends Comparable<T>> implements Cloneable {
     
     
      /**
-     * Remove duplicates in a sorted list.
-     */
+      * Remove duplicates in a sorted list.
+      */
     public void removeDuplicates() {
         int count = countNodes();
         
-        if (count == 0 || count == 1) { /* If there is only 2 elements. */
+        /* Base Case: If there is only 2 elements. */
+        if (count == 0 || count == 1) { 
             return;
         } else {
             Node<T> curr = head;
             do {
+                /* compareTo returns 0 if they match. */
                 if (curr.getNext().getData().compareTo(curr.getData()) == 0) {
-                    // Skip over the duplicate node. It will be garbage collected
-                    // by Java.
+                    // Skip over the duplicate node. It will be garbage collected by Java.
                     curr.setNext(curr.getNext().getNext());
                 } else {
                     curr = curr.getNext();
@@ -172,17 +167,33 @@ public class LinkedList<T extends Comparable<T>> implements Cloneable {
         }
         Node<T> prev = null;
         Node<T> curr = head;
+        
         while (curr != null) {
             Node<T> next = curr.getNext();
+//            System.out.println();
             curr.setNext(prev);
             prev = curr;
             curr = next;
         }
         head = prev;
     }
-   
+   /*
+    Null    [] -> [] -> [] -> [] -> Null
+    prev    curr  next
     
+    Null <- []    [] -> [] -> [] -> Null
+            prev  curr  next
     
+    Null <- [] <- []    [] -> [] -> Null
+                  prev  curr  next
+    
+    Null <- [] <- []  <- []    [] -> Null
+                         prev  curr  next
+    
+    Null <- [] <- []  <- [] <- []    Null
+                               prev  curr  next
+    
+    */
     
     
     
