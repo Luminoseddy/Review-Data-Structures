@@ -83,7 +83,7 @@ public class QueueBuiltWithTwoStacks<T> {
                 }
              }
             forwardStack.push(data);
-        } catch (Stack.StackOverflowException || Stack.StackUnderflowException se) {
+        } catch (Stack.StackOverflowException soe || Stack.StackUnderflowException sue) {
             throw new Queue.QueueOverflowException();
         }
     }

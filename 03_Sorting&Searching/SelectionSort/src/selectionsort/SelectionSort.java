@@ -36,17 +36,20 @@ public class SelectionSort {
         System.out.println();
     }
 
-    public static void swap(int[] listToSort, int iIndex, int jIndex) {
-        int temp = listToSort[iIndex];
-        listToSort[iIndex] = listToSort[jIndex];
-        listToSort[jIndex] = temp;
+    public static void swap(int[] listToSort, int i, int j) {
+        
+        
+        int temp = listToSort[i]; /* temp var holds i. ex: temp = [0]: 4 */
+        listToSort[i] = listToSort[j]; /* j is now stored in i. ex: [i] holds [j]  */
+        listToSort[j] = temp; /* and now the j becomes the new temp value.*/
+      
     }
 
     public static void selectionSort(int[] listToSort) {
         for (int i = 0; i < listToSort.length; i++) {
             for (int j = i + 1; j < listToSort.length; j++) {
                 
-                if (listToSort[i] > listToSort[j]) {
+                if (listToSort[i] > listToSort[j]) { /* If index[i] is greater than the index[j], then swap. */
                     swap(listToSort, i, j);
                 }
             }

@@ -67,12 +67,15 @@ public class MinimumValueInStack {
 
         public void push(int data) throws Exception { /* Pushes into the minStack. */
             
-            int min = data;         
+            int min = data;    
+            
             if (!minimumStack.isEmpty()) {        /* For every push() We peek inside the minStack as long as is not empty. */     
                 if (min > minimumStack.peek()) {  /* If data is greater then the top of minStack. */ 
-                    min = minimumStack.peek();    /* Then, minValue is the new top of the minStack. */
+                    min = minimumStack.peek();    /* Then, minValue remains as the peek in the min stack. */
                 }
             }
+            System.out.println("Min: "+min);
+            System.out.println("data: "+data);
             stack.push(data);                     /* Push value to stack. */
             minimumStack.push(min);               /* Push value to Minimum stack. */
         }
@@ -87,3 +90,6 @@ public class MinimumValueInStack {
         }
     }
 }
+
+
+
