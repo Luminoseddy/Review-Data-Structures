@@ -45,6 +45,8 @@ public class BinaryTreeIsBST {
         eight.setRightChild(eleven);
 
         System.out.println("Is BST: " + isBinarySearchTree(head, Integer.MIN_VALUE, Integer.MAX_VALUE));
+        
+  
     }
 
 

@@ -43,13 +43,15 @@ public class BinarySearch {
             
             int mid = min + (max - min) / 2; /* Locate the mid point of the list. */
             
-            if (sortedList[mid] == key){     /* If the key is located right in the middle */
-                return mid;
-            }
+            /* If the key is located right in the middle */
+            if (sortedList[mid] == key) { return mid; }   
+                
+            
             
             if (sortedList[mid] > key){ /* If the key is lessThan the current midPoint of the list */
                 max = mid-1;            /* Return a new max, being the the new length of the list. */
             } else {
+                System.out.println("mid: "+mid);
                 min = mid +1;           /* Else, the value is in the right side of the subarray.  */
             }
         }

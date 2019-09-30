@@ -7,7 +7,7 @@ public class BinaryTreeMaxDepth {
 
     public static void main(String[] args) {
         
-        /* Creating the objects */
+        /* Object of type Node of type Character*/
         Node<Character> a = new Node<>('A');
         Node<Character> b = new Node<>('B');
         Node<Character> c = new Node<>('C');
@@ -30,7 +30,7 @@ public class BinaryTreeMaxDepth {
         System.out.println("Max Depth: " + maxDepth(a));
     }
 
-    /* */
+    /* TAIL RECURSSION */
     public static int maxDepth(Node root) {
         
         /* Base case 1: IF no node in the tree. */
@@ -41,7 +41,7 @@ public class BinaryTreeMaxDepth {
             return 0;
         }
 
-        /* Add 1 for the current depth. */
+        /* Add 1 for the current depth. Tail Recurssion*/
         int leftMaxDepth = 1 + maxDepth(root.getLeftChild());
         int rightMaxDepth = 1 + maxDepth(root.getRightChild());
 

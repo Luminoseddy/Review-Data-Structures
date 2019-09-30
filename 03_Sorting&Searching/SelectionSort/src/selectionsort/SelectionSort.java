@@ -39,9 +39,9 @@ public class SelectionSort {
     public static void swap(int[] listToSort, int i, int j) {
         
         
-        int temp = listToSort[i]; /* temp var holds i. ex: temp = [0]: 4 */
-        listToSort[i] = listToSort[j]; /* j is now stored in i. ex: [i] holds [j]  */
-        listToSort[j] = temp; /* and now the j becomes the new temp value.*/
+        int temp = listToSort[i]; /* Ex. temp [2]: 6. */
+        listToSort[i] = listToSort[j]; /* [2]: 6 is now in [3] where 2 was.   */
+        listToSort[j] = temp; /* and now index [3] value has swapped into index[2]. */
       
     }
 
