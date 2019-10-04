@@ -44,6 +44,8 @@ public class BinaryTreePreOrderTraversal {
     }
 
     public static void preOrder(Node<Character>root) {
+        
+        /* Base case */
         if (root == null) {  return; }
         
         print(root);
@@ -62,24 +64,16 @@ public class BinaryTreePreOrderTraversal {
             this.data = data;
         }
 
-        public T getData() {
-            return data;
-        }
-
-        public Node<T> getLeftChild() {
-            return leftChild;
-        }
-
-        public void setLeftChild(Node<T> leftChild) {
-            this.leftChild = leftChild;
-        }
-
-        public Node<T> getRightChild() {
-            return rightChild;
-        }
-
-        public void setRightChild(Node<T> rightChild) {
-            this.rightChild = rightChild;
-        }
+        public T getData() { return data; }
+            
+        public Node<T> getLeftChild() { return leftChild; }
+            
+        public Node<T> getRightChild() { return rightChild; }
+            
+        public void setLeftChild(Node<T> leftChild) { this.leftChild = leftChild; }
+            
+        public void setRightChild(Node<T> rightChild) { this.rightChild = rightChild; }
+            
+        
     }
 }

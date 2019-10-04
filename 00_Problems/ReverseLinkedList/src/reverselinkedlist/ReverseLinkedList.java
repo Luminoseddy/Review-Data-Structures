@@ -13,64 +13,31 @@ public class ReverseLinkedList {
 
     private ReverseLinkedList next;
 
-    public ReverseLinkedList(int par) {}
     
-
-
+    
     public static void main(String[] args) {
         // TODO code application logic here
     }
     
-    public ReverseLinkedList reverseBetween(ReverseLinkedList head, int m, int n) {
+    public ReverseLinkedList reverseList(ReverseLinkedList head) {
         
-        if(m==n) return head;
-
-        ReverseLinkedList prev = null;                       // track (m-1)th node
-        ReverseLinkedList first = new ReverseLinkedList(0);  // first's next points to mth
-        ReverseLinkedList second = new ReverseLinkedList(0); // second's next points to (n+1)th
-
-        int i=0;
-        ReverseLinkedList p = head;
+        ReverseLinkedList prev = null;
+        ReverseLinkedList curr = head;
+        ReverseLinkedList next = null;
         
-        while(p!=null){
-            i++;
-            if(i==m-1){
-                prev = p;
-            }
-
-            if(i==m){
-                first.next = p;
-            }
-
-            if(i==n){
-                second.next = p.next;
-                p.next = null;
-            }
-
-            p= p.next;
+        while(curr != null){
+            
+            
+            next = curr.next; // we save the next node, into next b/c if we change curr.next val, we loose the value on next iteratoin.
+            curr.next = prev; // reverse, point the node to its previous <-
+            prev = curr;      // prev node becoems the node we're sitting on
+            curr = next;  // curr node becomes the node we saved.
         }
-        if(first.next == null)
-            return head;
+        return prev; // return the prev which is pointing at the head.
+    }
+    // 
+    // null->1->2->3->4->null
+    // null <-1 2 
 
-        // reverse list [m, n]    
-        ReverseLinkedList p1 = first.next;
-        ReverseLinkedList p2 = p1.next;
-        p1.next = second.next;
-
-        while(p1!=null && p2!=null){
-            ReverseLinkedList t = p2.next;
-            p2.next = p1;
-            p1 = p2;
-            p2 = t;
-        }
-
-        //connect to previous part
-        if(prev!=null)
-            prev.next = p1;
-        else
-            return p1;
-
-        return head;
-}
     
 }

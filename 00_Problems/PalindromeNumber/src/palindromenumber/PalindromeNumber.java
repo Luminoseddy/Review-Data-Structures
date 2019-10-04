@@ -14,18 +14,7 @@
  *      - Then the last digit can be obtained by (mod10), (122mod10) = 2.     
  */
 
-package palindromenumber;
-
-public class PalindromeNumber {
-
-    public static boolean isPalindrome(int x) 
-    {
-        int numberReversed = 0; /* starting value of the number trying to be reverted.*/
-        
-        if( x < 0 || (x % 10 == 0 && x != 0)){ 
-            return false;
-        }
-        /**
+/**
          * Assume x = 121
          * 
          * Cycle 1: revertedNum = 0 * 10 + 121 % 10 ==> 1  = revertedNum
@@ -38,18 +27,66 @@ public class PalindromeNumber {
          *          x = 1/10                        ==> 0  = x
          * 
          */
+
+package palindromenumber;
+
+public class PalindromeNumber {
+
+    public static boolean isPalindrome(int x) 
+    {
+        int numberReversed = 0; /* starting value of the number trying to be reverted. */
+        int remainder = 0;
+        
+        /* Base case */ 
+        if( x < 0 || (x % 10 == 0 && x != 0)){ return false; }
+              
         while(x > numberReversed){
-            System.out.println("x: "+x+" numberReversed: "+ numberReversed);
-            numberReversed = numberReversed * 10 + x % 10; /* 0 = 0 * 10 + 121 % 10 ==> 1 */
-            x = x/10;
+            
+            remainder = x % 10; // get remainder of x. 
+            numberReversed = numberReversed * 10 + remainder; // mult. rev# by 10, then add remainder. 
+            x = x/10; // to remove last int
+                  
         }
         
-        System.out.println(x);
+        // return x == numberReversed/10 for odd length numbers. 
+        
         return x == numberReversed || x == numberReversed/10;
     }
     
-    public static void main(String arg []){
+    public static boolean isPalindrome(String s) {
+        // Pointers pointing to the beginning and the end of the string 
+        int i = 0;
+        int j = s.length() - 1; 
         
-        System.out.println(isPalindrome(121));
+        char frontIndex;
+        char endIndex;
+  
+        // While there are characters toc compare 
+        while (i <= j) {     
+            frontIndex = s.charAt(i);
+            endIndex = s.charAt(j);
+  
+            if (s.isEmpty()) {
+        	    return true;
+            }
+            
+            if (frontIndex != endIndex)
+            {
+                if(frontIndex != Character.toUpperCase(endIndex) || Character.toUpperCase(frontIndex) != endIndex)
+                    return false;
+            }
+            // Increment first pointer and 
+            // decrement the other 
+            i++; 
+            j--;            
+        } 
+        // Given string is a palindrome 
+        return true; 
+    }
+    
+    public static void main(String arg []){
+      
+        System.out.println("\nare the numbers palindrome?: "+isPalindrome(1221));
+        System.out.println("are the strings palindrome?: "+isPalindrome("anA")); 
     }
 }

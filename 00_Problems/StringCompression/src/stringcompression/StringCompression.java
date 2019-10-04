@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package stringcompression;
 
-/**
- *
- * @author edward
- */
 public class StringCompression {
 
 
@@ -19,13 +11,13 @@ public class StringCompression {
         
         
         char[] arr = {'a','a','a','a','b','b','b','c','c'};
+        System.out.println(charCompress(arr));
         
         stringCompress("aaaabbbcc");
-        System.out.println(charCompress(arr));
+        
         
 
     }
-    
     
     public static void stringCompress(String str){
         
