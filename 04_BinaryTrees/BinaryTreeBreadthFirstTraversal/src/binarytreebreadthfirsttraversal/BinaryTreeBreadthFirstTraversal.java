@@ -47,7 +47,7 @@ public class BinaryTreeBreadthFirstTraversal {
             Node node = queue.dequeue();
             
             
-//            System.out.println("n node:");
+            System.out.println("n node:");
             print(node);
 
             if (node.getLeftChild() != null) {

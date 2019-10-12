@@ -19,76 +19,76 @@ package quicksort;
 
 public class QuickSort {
 
-    private static int listToSort[] = new int[] {6, 5, 11, 4, 2, 5, 10, 3, 7, 8, 9};
-    private static int l = listToSort.length;
-    
-    public static void main(String[] args) {
+       /* This function takes last element as pivot, places the pivot element at its correct 
+       position in sorted array, and places all smaller (smaller than pivot) to left of of pivot */
+    public int partition(int arr[], int low, int high) {
         
-        quickSort(listToSort, 0, l - 1);
-        print(listToSort);
-    }
-
-    /* Utility type function. */
-    public static void print(int[] listToSort) {
-        int x = listToSort.length;
-        for(int i = 0; i < x; ++i){
-            System.out.print(listToSort[i]+ " ");
-        }
-    }
-
-    /* Processes recursion to sort the sub-Lists. */
-    public static void quickSort(int[] listToSort, int low, int high) {
-        /* Stop the sorting if the lower index is not lower than the high Index. */
-        if (low < high) {
-            
-            /* Finds the pivot in the array. */
-            int pivotIndex = partition(listToSort, low, high);
-
-            /* Recursively, sort all elements before pivot point. */
-            quickSort(listToSort, low, pivotIndex - 1);
-
-            /* Recursively, sort all elements after pivot point. */ 
-            quickSort(listToSort, pivotIndex + 1, high);
-        }   
-    }
-
-    /* Finds the pivot, and moves elements to before or after the pivot. */
-    public static int partition(int[] listToSort, int low, int high) {
-        /* Element/pivot placed on the left position */
-        int pivot = listToSort[high]; 
-        int i = (low - 1); /* Index of the smaller element. */
-        int h = high;
+        int pivot = arr[high];  
+        int i = (low-1); // index of smaller element 
         
-        for (int j = low; j < high; j++){
-            
-            /* If the current element is smaller than the pivot. */
-            if(listToSort[j] < pivot){
-                i++;
-                int temp = listToSort[i];
-                listToSort[i] = listToSort[j];
-                listToSort[j] = temp;
-            }
-        }
+        for (int j=low; j<high; j++) 
+        { 
+            // If current element is smaller than the pivot 
+            if (arr[j] < pivot) 
+            { 
+                i++; 
+  
+                // swap arr[i] and arr[j] 
+                int temp = arr[i]; 
+                arr[i] = arr[j]; 
+                arr[j] = temp; 
+            } 
+        } 
+  
+        // swap arr[i+1] and arr[high] (or pivot) 
+        int temp = arr[i+1]; 
+        arr[i+1] = arr[high]; 
+        arr[high] = temp; 
+  
+        return i+1; 
+    } 
+  
+  
+    /* The main function that implements QuickSort() 
+       arr[] --> Array to be sorted, 
+       low  --> Starting index, 
+       high  --> Ending index */
+    void sort(int arr[], int low, int high) 
+    { 
+        System.out.println("low: "+low+" high " +high);
+        if (low < high) 
+        { 
+            /* pi is partitioning index, arr[pi] is  now at right place */
+            int pi = partition(arr, low, high); 
+            System.out.println("pi: "+pi);
+  
+            // Recursively sort elements before partition and after partition 
+            sort(arr, low, pi-1); 
+            sort(arr, pi+1, high); 
+        } 
+    } 
+  
+    /* A utility function to print array of size n */
+    static void printArray(int arr[]) 
+    { 
+        int n = arr.length; 
+        for (int i=0; i<n; ++i) 
+            System.out.print(arr[i]+" "); 
+        System.out.println(); 
+    } 
+  
+    // Driver program 
+    public static void main(String args[]) 
+    { 
+        int arr[] = {10, 7, 8, 9, 1, 5}; 
+        int n = arr.length; 
+  
+        QuickSort ob = new QuickSort(); 
         
-        /* Swaping listToSort[i+1] and pivot. */
-        int temp = listToSort[i +1];
-        listToSort[i+1] = listToSort[h];
-        listToSort[h] = temp;
-
-        return i + 1;
-    }
-    
-//    public static void swap(int[] listToSort, int iIndex, int jIndex) {
-//        int temp = listToSort[iIndex];
-//        listToSort[iIndex] = listToSort[jIndex];
-//        listToSort[jIndex] = temp;
-//    }
-    
-    public static void printSI (String a, int b){
-        System.out.println(a + b);
-    }
-    public static void printS (String a){
-        System.out.println(a);
-    }
+        ob.sort(arr, 0, n-1); 
+  
+        System.out.println("sorted array"); 
+        printArray(arr); 
+    } 
 }
 
